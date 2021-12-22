@@ -41,6 +41,11 @@ fichier_depart_pyplot: qst_avance_exec2
 a_reproduire:
 	rm timing.dat && rm timing.pdf 
 
+
+courbe_caches__MEMOIRE: fichier_depart_pyplot
+	./passage.sh timing #avant: chargement en memoire de timing.dat
+
+
 clean:
-	rm -f *.sh~ *.s~ *.c~ *.o a.out Makefile~ qst file1.txt file2.txt file.txt file3.txt '#Makefile#' qst_avance_methode1 qst_avance_methode2_TOP Makefile~
+	rm -f *.sh~ *.s~ *.c~ *.o a.out Makefile~ qst file1.txt file2.txt file.txt file3.txt '#Makefile#' qst_avance_methode1 qst_avance_methode2_TOP && rm -f Makefile~ timing.dat timing.pdf
 
