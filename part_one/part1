@@ -1,0 +1,187 @@
+Caches et memoire:
+=>caches??::>
+ Emplacements memoire permettant le stockage temporaire de quelques donnees utiles l'acces au cache est fait avant l'acces memoire classique et est plus rapide (pas bcp. de données) et ca renvoie 0 le bloc electronique redirige (apres activation(lecture 0)) le fil d'acces vers la memoire sinon le retour se fait en !0==valeur voulue. et le bloc ne s'active pas donc un autre bloc le teste pas activée et redirige le fil de donnée pret au banc manips. qui veut exploiter cette donnee, sinon (cas avant) la sortie de la memoire qui est dirigee vers ce banc.
+Rq: d'autres ajouts d'ecriture sont obligatoires sinon les caches donneront 0 en sortie sinon.
+EXO1:
+1->1/2 millions en terme de temps de cycles du CPU pour faire un parcours d'un 'grand' multiple de deux d'un tableau allouée dynamiquement avec 100 MILLIONS d'elements et en vecorisation: c'est bien. D'habitude les acces d'adresses prennent longtemps (voir l'avantage du deroulement) surtout en vectorisation logiquement (adresses pas successives en octets du type des elements du tableau).
+2->frequence 1 coeur (c'est celui qui travaille car pas travail complique ou en chaine(..) == 2963.590 MHz. [ca varie, eh bien! le travail du processus dont le nombre de Hz represente le nombre de battement par seconde (repetition d'un meme cycle) en fonction du temps i.e. combien il fait de cycles chaque seconde sur le plan n'est pas toujours le meme rslt=>le processus en coordination avec d'autres architectures peut diminuer sa frequence ou l'augmenter librement mais d'une facon limitee).
+ON PRENDRA: FREQUENCY=2963.590 Mhz.(fichier /proc/cpuinfo)
+Rq: di on prend une grandeur exponentielle a lire (2^(??)) comme dans ce cas (multiple d'une (!!<<<<<) puissance de 2 trivialement le tout >=8 i.e. quand on augmente la tendance aux performances machines et du coup on s'approche du meilleur débit possible ; c'est une chose triviale. On demande beaucoup rapidement eh bien le débit d'information suivra les bus de performances logistiques pour a la fin obtenir le meilleur debit possible.VOILA.///
+->AFFICHONS LE MEILLEUR DEBIT EN Mo/s:
+1hz represente classiquement une repetition d'un modele periodique CLASSIQUE soit 1 cycle et cela en 1 seconde car 1 hz. DONC la frequence exprimee en Mhz represente le nombre de cycles que peut faire le processeur en 1s
+=>f=2963.590*10^6 cycles par seconde.
+avec une regle de trois simple, si on veut obtenir pour ce programme la grandeur s-1 il suffit de diviser f par SA valeur puis on multiplie par le nombre d'octets lu puis on aura le resultat final et o/s ; on le divisera par 10**6 pour avoir des Mo/s.Evitons de diviser par e6 ca va donner des Mo/s directement.VOILA.
+Rq: Un meilleur timing augmente le debit logiquement car les Mo a parcourir sont les memes donc du coup si on a un nombre de cycles pour le programme petit cest a dire que chaque cycle fait beaucoup cest a dire que le debit est superieur a ce que l'on croyait.
+35Go/s ce qui est un bon débit comparant avec les débit de la classe (avec putty).
+->REPRISE RAPIDE:
+pour calculer le debit:
+2 methodes:
+1er methode:
+->->f/nombre_cycles(via rdtsc 2 fois) => /s et on multiplie par la taille en octets du tableau parcouru(!!) sans conversion (ca serait mieux).
+2ieme methode:
+->->nombre_cycles(via 2 fois rdtsc)/f donne le nombre de secondes (PLUS COHERENT) et pour obtenir le debit on fait: taille_tableau/le_nombre_de_secondes ce qui nous donne trivialement combien de Mo lus par seconde.
+On trouve a peu pres: 35 Go/s ce qui est ~coherent avec la frequence qui vaut:: a peu pres 3GHZ.(TOUJOURS LE MEME COEUR)()
+On parle toujours d'octet (MBPS pour une connexion internet).(rq.(((1))))
+rq[2]:::>>la formule generale est: (taille_tableau_parcourue)/(nombre_de_cycles/frequence) : Mo/s si la frequence reste en Mhz.
+->remarque: un script shell peut donner la frequence directement:
+while read part
+do
+echo $part>file1.txt
+grep 'cpu MHz' file1.txt > file2.txt
+retvalue=$?
+if [ "$retvalue" -eq 0 ];then
+export line=$part
+echo $line | cut -d ":" -f2 > file3.txt
+done</cpu/info
+=>./frq creera le fichier file3.txt qui contiendra la frequence du coeur QUI travaille.
+<=>meme procedure que lorsqu'on voulait recuperer le temps ecoule:
+(time ./a.out) > file1.txt 2>&1
+while read part
+do
+echo $part>file2.txt
+grep 'real' file2.txt > file3.txt
+retvalue=$?
+if [ "$retvalue" -eq 0 ]; then
+export line=$part
+echo $line>file4.txt
+done<file1.txt
+apres on fait echo $line>>file4.txt avec de nouveaux fichiers pour garder la comparaison dans un meme.
+qst1/2 faites.
+RQ avant PASSAGE a la qst.{{3}}::: avec le deroulement ??
+ON sait qu'avec le deroulement, le temps obtenu se restreint aux instructions imul seulement car le temps global incluant celui des sauts est faible.
+=>Testons avec un deroulement:
+Le deroulement permet un temps en cycles dimininue car saut vers le label de la boucle couteux pas present bcp. et puisque f cst. et n1 est prise constante pour les 2 fichiers linkage VIA qst4.c (n1=62500*2=125000) donc si nbr_cycles diminue nbr_cycles/f qui donne le nombre de secondes pour acceder aux ressources du tableau augmente et puisque on divise cette quantite par 4*n1 (nbr__d'octets du tableau parcouru) donc l'inverse qui est le resultat diminie .
+ RSLT IMPORTANT: 
+   **nbr_cycles diminue pour une meme execution => le debit augmente(ce qui est logique)
+   **et inversement, plus le nbr_cycles augmente (faute de deroulement par exemple), plus le debit memoire il diminue car logiquement pour une meme donnee il lui faut plus de secondes pour la rapatrier ou elle doit etre mise.
+CONCLUSION:
+*****Les debits resultants sont classés d'une facon croissante.(le dernier qui presente plus de deroulements a un debit plus fort car le temps en cycles est faible).
+       RAPPEL: le temps en ns~: ms  pour un saut est grand par rapport aux autres instructions de rip_avant rip_suivant=suivant_classique(rip_avant).
+---------------------------3ieme question:
+320+0.2% des 320 ()pour s'assurer du cache (au moins quelque chose de commun dans la taille (localite temporelle- mais en terme de localite spatiale OUI--) ) MAIS:
+   avec  320+20% du reste ca revient pas a grand chhose sinon pour les grandes machines la suite des 20% premieres restants.
+Avec la premiere, la taille a parcourir est 1.2*j(j+0.2*j) fonction de j donc le programme se dit a une certaine iteration que ca sera le tableau en entier vu le suivi de la boucle => caches using ++ mais dans l'autre la taille prochaine c'est debut+0.2*(N-debut) le N perturbe un peu fait PENSER A DE NOUVEAUX elements ulterieurs => on appelle cela: une mauvaise utilisation des caches.
+RAPPEL A APPRENDRE;LA BOUCLE/::
+for(int j=320;j<N;j=(int)(j*1.2)){
+float debit;
+int time,tmin=memoire(A,j);//ON s'en fiche vraiment de la 1er formule(> dans 99% et ..///)
+for(int i=0,i<20;i++){
+t=memoire(A,j);
+if(t>0 && t<tmin) tmin=t;}
+debit=(j*sizeof(float))/(tmin/frequence) (f/a * T <=> T / (a/f))
+avec T la taille tab. parcourue et a le temps en cycles mis par le cpu pour memoire().
+printf("%d %f\n",j,debit);}
+etVOILA.
+avec ca, on met en evidence que le debit diminue lorsque la taille parcourur augmente sachant qu'avant une partie de la taille a ete parcourue, ce ui veut signifier qu'ona fait recourt au caches pour reduire le nombre d'acces memoire et du coup reduire le debit memoire en Mo/s. (la plupart des Mo proviennent du cache et les secondes restent les memes!! du coup le debit chute voire oscille dans des cas complexes(--<<<voir cas avant)).///
+sudo apt install gnuplot && sudo apt install plotutils
+=>apres: lancer gnuplot>(wxt)
+apres::
+->set term pdf((pdfcairo))
+->set output "timing.pdf"
+->set log x (pour que la courbe soit proportionnée)
+->plot "timing.dat" w l 
+->quit 
+sans le show, le pdf representatif a ete cree.
+=>ca represente bien le principe des relativitees des caches.//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
