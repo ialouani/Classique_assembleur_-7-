@@ -86,7 +86,10 @@ sans le show, le pdf representatif a ete cree.
 Rq: le truc de diminution du nombre de cycles par augmentation du debit et inversement n'est pas vraie ici DU TOUT car f reste la meme mais nbr_cycles et taille_tableau__parcouru qui varie(ce dernier) rend le nombre de cycle variant lui aussi donc on peut pas conclure mathematiquement..
 Rq2: Les performances du caches permettent une reduction du debit memoire appellee aussi nbr_besoins d'acces unitaires a la memoire EN SORTIE mais en aucun cas reduire le temps de cycle (total)-___1 En general car on sait pas selon les machines si les caches sont plus rapides par saturation ou non .../
 Rq3: on peut introiduire un target qui permet depuis le Makefile de montrer la courbe qui correspond a ce que fait le cache en ordonnee i.e. une diminution du debit par besoin de caches tant qu'on approche a la fin du tableau~ et ca oscille parfois: cela montre que relire les memes donnees ou bien relire un tableau d'entiers en general avec un parametre dependant d'un parametre precedent permet de se retrouver partiellement dans le cache et ainsi de reduire le temps d'acces memoire d'ou le debit sortant de la memoire pour une execution fixe.
-
+Verification: page html suivant le lien (apres avoir eu l'id depuis le modele(voir Makefile)):
+  **https://www.intel.fr/content/www/fr/fr/products/sku/124967/intel-core-i58250u-processor-6m-cache-up-to-3-40-ghz/specifications.html**.
+=>On retrouve bien 6Mo~6144Ko===6144KB en cache.
+FIN_exo1.(revesion shell + re-travail approfondi en c + decouverte tres large de C++)./////
 
 
 
