@@ -2,7 +2,7 @@
 while read part
 do
     echo $part > file1.txt
-    grep 'cpu MHz' file1.txt > file2.txt
+    grep 'cpu MHz' file1.txt>file2.txt
     retvalue=$?
     if [ "$retvalue" -eq 0 ];then
         export line=$part
@@ -12,3 +12,6 @@ do
 done< /proc/cpuinfo
 rm file1.txt
 rm file2.txt
+if [ ! -z $@ ];then
+    cat file3.txt
+fi
