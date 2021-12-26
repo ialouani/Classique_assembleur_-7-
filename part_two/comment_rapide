@@ -1,0 +1,39 @@
+2->i k j
+on fixe i la ligne et k puis on met le calcul en C[i,j]=A[i,k]*B[k,j].
+6-> k j i
+on fixe k et la colonne j et on calcule A[i,k]*B[k,j].
+=>pas matrices.
+
+i*N+k
+k*N+j=>de meme.++
+i*N+j => localite spatiale car en 2-> cette derniere se suive pour la PROCHAINE.++
+
+pour le 6->: 
+--: aucune localite .
+
+Aucune localite temporelle pour les deux car aucun produit_matrix() n'utilise suivant les 3 boucles imbriquées des instructions/données_(+hors__portée) precedentes. 
+
+exemple: k,i,j pour le 5::
+=>localite spatiale pour la meme chose(<).
+On itere sur j en laissant les autres fixes (principe d'affectation en deferencage suivant le 'FOR'.//)./////
+
+LOCALITE TEMPORELLE: ~MAIS produit matrices donc juste de nouvelles datas ecrites a chaque fois.et spatiale car tableau===pointeur.
+spatiale=>illustration en PLUS si adresse presque SUCCESSIVES.
+
+max~->1,2,3,5
+min~->4,6
+
+i,j,k ; i k j ; j i k ; k i j /:// max~
+min~ /:// j k i ; k j i 
+valeurs:
+i*N+j
+i*N+k
+k*N+j
+TJRS: le max est suivant(()) j ou k donc adresse k*N+j~ s'incremente de 1
+ET le min est suivant(()) i? mais i ne permet pas de faire dans la suite d'instructions une connaissance prealable de k*N+j pour les 2 demi-tours QUI SONT EN COURS POUR LE CALCUL NORMAL.
+FIN_INTERPRETATION.
+
+
+
+
+
