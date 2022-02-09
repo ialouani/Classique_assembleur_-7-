@@ -2,6 +2,7 @@ F1=-std=c99
 F2=-felf64
 F3=--std=c++11
 #Sur mon système, il y a quatre fichiers lisibles par l'utilisateur contenant des vidages hexadécimaux d'informations de périphérique; deux d'entre eux sont tous des zéros, deux autres contiennent des informations sur le disque et le DVD; Le DVD n'a pas de numéro de série et la série de disques commence à l'offset 0x20.
+all: courbe_caches__MEMOIRE
 frequence_donnee_actuelle: frq.sh #donne la frequence du coeur principale
 #coeur 0 du cpu en cours.(qui peut agmenter legerement en cas de travail
 #prolonge et sur les memes trucs)
@@ -45,7 +46,7 @@ courbe_caches__MEMOIRE: fichier_depart_pyplot
 	./passage.sh timing #avant: chargement en memoire de timing.dat
 infos_caches: nbr_caches.sh
 	./nbr_caches.sh
-	cat file2.txt
+	less file2.txt
 tout_infos_cpu: donnees_CPU_architecture__interne.sh
 	./donnees_CPU_architecture__interne.sh
 	gedit file_infos.txt &
